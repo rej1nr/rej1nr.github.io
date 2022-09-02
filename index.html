@@ -1,50 +1,69 @@
-
 <!DOCTYPE html>
-<html lang="en" style="height: 100%;">
+<html>
   <head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=1.0" />
-    <title>Document</title>
-    <script src="https://uat-elements.zwitch.io/zwitch.js"></script>
-  </head>
-  <script>
-    window.onload = () => {
-      let secret;
-      secret = (async () => {
-        let res = await fetch(
-          "https://uat-api.zwitch.io/backoffice/generate-token",
-          {
-            method: "POST",
-            headers: {
-              Authorization: `Bearer ak_test_yfnFxfGOprcEQu3EPerVQEANcnRe4Q9Lix2s:sk_test_YUXFaZpVBAID6zNnfIecKihyQ6Inz5nErTLq`,
-              Accept: "application/json",
-              "Content-Type": "application/json"
-            },
-            body: JSON.stringify({
-              type: "onboarding",
-              metadata: {}
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      body {
+        height: 100vh;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        margin-top: 25px;
+      }
+      video {
+        max-width: 600px;
+        height: auto;
+        border: 5px solid black;
+      }
+      .buttons {
+        display: flex;
+        justify-content: center;
+      }
+      button {
+        padding: 12px 25px;
+        margin: 0 10px;
+        cursor: pointer;
+        font-size: 16.5px;
+        font-weight: bold;
+        background: cyan;
+        outline: none;
+        border: 1px solid black;
+      }
+    </style>
+    <script>
+      const startWebCam = () => {
+        if (navigator.mediaDevices.getUserMedia) {
+          navigator.mediaDevices
+            .getUserMedia({ video: { facingMode: 'user' } })
+            .then((stream) => {
+              const video = document.querySelector("video");
+              video.srcObject = stream;
             })
-          }
-        );
-        return res.json();
-      })();
+            .catch((error) => console.log(error));
+        }
+      };
+      startWebCam();
 
-      /* -------------------------------------------------------------
-       * Below is the code snippet that you would use to embed the component
-         ------------------------------------------------------------- */
-
-      (async () => {
-        const token = await secret;
-        let creds = {
-          token: token.data.session
-        };
-        /* This is OPTIONAL real-time appearance & last param to SDK, if not passed will be fetched from API
-         * if passsed will merge with whatever recieved from API */
-      })();
-    };
-  </script>
-  <body style="height: 100%;margin: 0;">
-    <zio-webcam></zio-webcam>
+      const StopWebCam = () => {
+        const video = document.querySelector("video");
+        let stream = video.srcObject;
+        let tracks = stream.getTracks();
+        tracks.forEach((track) => track.stop());
+        video.srcObject = null;
+      };
+    </script>
+  </head>
+  <body>
+    <div class="container">
+      <video autoplay></video>
+      <div class="buttons">
+        <button onclick="startWebCam()">Start</button>
+        <button onclick="StopWebCam()">Stop</button>
+      </div>
+    </div>
   </body>
 </html>
