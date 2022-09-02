@@ -38,7 +38,7 @@
       const startWebCam = () => {
         if (navigator.mediaDevices.getUserMedia) {
           navigator.mediaDevices
-            .getUserMedia({ video: { facingMode: 'environment' } })
+            .getUserMedia({ video: { facingMode: 'user' } })
             .then((stream) => {
               const video = document.querySelector("video");
               video.srcObject = stream;
