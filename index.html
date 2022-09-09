@@ -34,36 +34,11 @@
         border: 1px solid black;
       }
     </style>
-    <script>
-      const startWebCam = () => {
-        if (navigator.mediaDevices.getUserMedia) {
-          navigator.mediaDevices
-            .getUserMedia({ video: { facingMode: 'environment' } })
-            .then((stream) => {
-              const video = document.querySelector("video");
-              video.srcObject = stream;
-            })
-            .catch((error) => console.log(error));
-        }
-      };
-      startWebCam();
-
-      const StopWebCam = () => {
-        const video = document.querySelector("video");
-        let stream = video.srcObject;
-        let tracks = stream.getTracks();
-        tracks.forEach((track) => track.stop());
-        video.srcObject = null;
-      };
-    </script>
   </head>
   <body>
     <div class="container">
-      <video autoplay playsinline></video>
-      <div class="buttons">
-        <button onclick="startWebCam()">Start</button>
-        <button onclick="StopWebCam()">Stop</button>
-      </div>
+      Hi How are you
+      <iframe src="https://projects.wojtekmaj.pl/react-pdf/static/sample.49a87e34.pdf" title="PDF Checker"></iframe>
     </div>
   </body>
 </html>
