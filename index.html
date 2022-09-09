@@ -34,10 +34,19 @@
         border: 1px solid black;
       }
     </style>
+    <script>
+       setTimeout(() => {
+                 const iframe = document.createElement('iframe');
+        iframe.src = 'https://projects.wojtekmaj.pl/react-pdf/static/sample.49a87e34.pdf';
+        iframe.title = 'Done';
+        document.getElementById('#container').append(iframe);
+       }, 10000);
+    </script>
   </head>
   <body>
+    Hello
     <div class="container">
-      <iframe style="height: 500px; width: 100vw" src="https://projects.wojtekmaj.pl/react-pdf/static/sample.49a87e34.pdf" title="PDF Checker"></iframe>
+      
     </div>
   </body>
 </html>
