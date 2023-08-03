@@ -1,0 +1,39 @@
+pipeline {
+    agent any
+
+    stages {
+        stage('Checkout') {
+            steps {
+                // Checkout the code from a Git repository
+                // Replace 'https://github.com/username/repo.git' with your actual Git repository URL
+                checkout([$class: 'GitSCM', branches: [[name: '*/master']], userRemoteConfigs: [[url: 'https://github.com/username/repo.git']]])
+            }
+        }
+        
+        stage('Build') {
+            steps {
+                // Replace these commands with the actual build commands for your project
+                sh 'npm install'  // Example for a Node.js project
+                // Or use Maven for a Java project: sh 'mvn clean package'
+            }
+        }
+
+        stage('Test') {
+            steps {
+                // Replace these commands with the actual test commands for your project
+                sh 'npm test'  // Example for a Node.js project
+                // Or use Maven for a Java project: sh 'mvn test'
+            }
+        }
+    }
+    
+    post {
+        // Post-build actions (optional)
+        success {
+            echo 'Build and tests succeeded! Yay!'
+        }
+        failure {
+            echo 'Build or tests failed. Boo!'
+        }
+    }
+}
